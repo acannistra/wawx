@@ -28,9 +28,11 @@ map.on('load', function () {
                   type: 'categorical',
                   stops: [
                       ['Low', dangerColors.low],
-                      ['Moderate', dangercolors.moderate],
-                      ['Considerable', dangercolors.considerable]]},
-          'fill-opacity' : 0.6,
+                      ['Moderate', dangerColors.moderate],
+                      ['Considerable', dangerColors.considerable], 
+                  ['High', dangerColors.high], 
+                  ['Extreme', dangerColors.extreme]]},
+          'fill-opacity' : 0.8,
           'fill-outline-color' : 'black'
         }
     });
