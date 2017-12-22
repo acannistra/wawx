@@ -1,0 +1,8 @@
+{
+    "dev": {
+        "app_function": "app.app", 
+        "s3_bucket": "nwacapi",
+		"profile_name" : "nwac-lambda-admin",
+		"slim_handler" : true
+   }
+}
