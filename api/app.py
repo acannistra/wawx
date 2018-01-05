@@ -11,7 +11,7 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route("/danger")
-def danger():
+def danger(event = None, context=None):
     regions_url = "http://www.nwac.us/static/home/data/regions.json"
     forecast_url = "https://www.nwac.us/api/v4/danger_map_data/"
     regions_raw = requests.get(regions_url)
@@ -24,4 +24,4 @@ def danger():
     return(jsonify(json.loads(joined.to_json())))
     
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)

@@ -1,8 +1,11 @@
 {
     "dev": {
         "app_function": "app.app", 
-        "s3_bucket": "nwacapi",
-		"profile_name" : "nwac-lambda-admin",
-		"slim_handler" : true
-   }
+        "aws_region": "us-west-2", 
+        "profile_name": "nwac-lambda-admin", 
+        "project_name": "nwacdata", 
+        "runtime": "python2.7", 
+        "s3_bucket": "zappa-jyda9pzh5", 
+        "slim_handler" : true
+    }
 }
