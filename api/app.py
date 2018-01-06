@@ -2,8 +2,9 @@ import geopandas as gpd
 import pandas as pd
 import requests
 import json
-from flask import Flask, jsonify, Response
+from flask import Flask, jsonify, Response, request
 from flask_cors import CORS
+from regioninfo import getRegionalForecast
 
 
 
@@ -23,5 +24,12 @@ def danger(event = None, context=None):
     joined = regions.join(forecast)
     return(jsonify(json.loads(joined.to_json())))
     
+
+@app.route("/region")
+def regional():
+    region = request.args.get('name')
+    return(jsonify(getRegionalForecast(region)), 200)
+
+
 if __name__ == '__main__':
     app.run(debug=True)
