@@ -17,6 +17,7 @@ import styled from 'styled-components';
 import messages from './messages';
 import {Row, Col} from 'elemental'
 import '!!style-loader!css-loader!../../root.css';
+//var axios = require('axios');
 
 export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 	constructor(props){
@@ -24,14 +25,29 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 		this.state = {
 			'clickedForecast': '',
 			'clickedRegion' : 'None Selected',
-			'clickedURL' : ''
+			'clickedURL' : '',
+			'issuedTime' : '',
+			'problems' : '',
+			'danger' : ''
 		}; 
 		this.handler = this.handler.bind(this)
 		this.conditionClickHandler = this.conditionClickHandler.bind(this)
 	};
 
 	handler (features){
-		console.log("IN HANDLER")
+		var api_url = "https://h0g1asmd41.execute-api.us-west-2.amazonaws.com/dev/region?name="
+		var zone_name = features.url.split('/')[3]
+		var updateFromAPI = function(data){
+			this.setState({
+				'issuedTime' : data.data.updateTime,
+				'problems'   : JSON.stringify(data.data.problems),
+				'danger'     : JSON.stringify(data.data.danger)
+
+			})
+			console.log(this.state)
+		}
+		var updateFromAPI = updateFromAPI.bind(this);
+		axios.get(api_url + zone_name).then(updateFromAPI);
 		this.setState({
 			'clickedForecast' : decodeURIComponent(features.bottom_line_summary.replace(/&nbsp;/g, " ")), 
 			'clickedRegion' : features.zone_abbreviated_name,
@@ -42,7 +58,6 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 
 	conditionClickHandler(e) {
 		e.preventDefault();
-		console.log("IN HANDLER")
 		this.setState({
 			'clickedForecast' : event
 		})
@@ -63,7 +78,7 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 		    	<Map forecastText={this.forecastText} conditionClickHandler={this.conditionClickHandler} handler = {this.handler}/>
 		    </Col>
 		    <Col xs="66%" sm="25%" lg='19.666%'>
-		    	<ConditionsBox summary={this.state.clickedForecast} region={this.state.clickedRegion} url={this.state.clickedURL}/>
+		    	<ConditionsBox summary={this.state.clickedForecast} region={this.state.clickedRegion} url={this.state.clickedURL} time={this.state.issuedTime} problems={this.state.problems} danger={this.state.danger}/>
 		    </Col>
 		    
 		  </Row>

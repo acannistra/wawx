@@ -12,11 +12,23 @@ import 'mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg';
 import Tooltip from 'components/Tooltip'
 import {Spinner} from 'elemental'
 
+
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
 const MapContainer = styled.div`
   height: 100%
 `;
+
+const dangerColors = {};
+
+dangerColors["no-data"] = "#808080";
+dangerColors["no-rating"] = "#808080";
+dangerColors.low = "#4db848";
+dangerColors.moderate = "#fcf200";
+dangerColors.considerable = "#f7941e";
+dangerColors.high = "#cd1c24";
+dangerColors.extreme = "#231f20";
+const maxbounds = [[-127.89,44.09],[-113.88,51.06]]
 
 class LegendItem extends React.Component{
   color;
@@ -36,11 +48,61 @@ class Map extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      'loading' : true
+      'loading' : true, 
+      'mapobj': '', 
+      'elev_band' : "Above Treeline"
+    }
+    var that = this;
+    this.change_elev = function(e) {
+      const level = e.target.id
+      e.target.style={'background-color' : 'yellow'}
+      console.log()
+      switch(String(level)){
+        case "above":
+          that.setState({'elev_band' : "Above Treeline"})
+          that.state.mapobj.setPaintProperty('nwac-danger', 'fill-color', {
+                                              property: 'danger_elev_high',
+                                              type: 'categorical',
+                                              stops: [
+                                                  ['Low', dangerColors.low],
+                                                  ['Moderate', dangerColors.moderate],
+                                                  ['Considerable', dangerColors.considerable], 
+                                              ['High', dangerColors.high], 
+                                              ['Extreme', dangerColors.extreme]]})
+          break;
+        case 'at':
+          that.state.mapobj.setPaintProperty('nwac-danger', 'fill-color', {
+                                              property: 'danger_elev_middle',
+                                              type: 'categorical',
+                                              stops: [
+                                                  ['Low', dangerColors.low],
+                                                  ['Moderate', dangerColors.moderate],
+                                                  ['Considerable', dangerColors.considerable], 
+                                              ['High', dangerColors.high], 
+                                              ['Extreme', dangerColors.extreme]]});
+          that.setState({'elev_band' : "At Treeline"})
+          break;
+        case 'below':
+          that.state.mapobj.setPaintProperty('nwac-danger', 'fill-color', {
+                                              property: 'danger_elev_low',
+                                              type: 'categorical',
+                                              stops: [
+                                                  ['Low', dangerColors.low],
+                                                  ['Moderate', dangerColors.moderate],
+                                                  ['Considerable', dangerColors.considerable], 
+                                              ['High', dangerColors.high], 
+                                              ['Extreme', dangerColors.extreme]]})
+          that.setState({'elev_band' : "Below Treeline"})
+          break;
+        default:
+          console.log(level)
+      }
     }
   }
 
   setTooltip(features) {
+    console.log("set tooltop")
+    axios.get("https://h0g1asmd41.execute-api.us-west-2.amazonaws.com/dev/region?name=olympics").then(function(data){console.log(data)})
     if (features.length) {
       const renderFeature = (feature, i) => {
         if (feature.layer['source'] == "nwac-danger"){
@@ -55,18 +117,9 @@ class Map extends React.Component {
 
   componentDidMount() {
 
-    const dataurl = "https://twqbrys2pc.execute-api.us-west-2.amazonaws.com/dev/danger";
+    const dataurl = "https://h0g1asmd41.execute-api.us-west-2.amazonaws.com/dev/danger";
 
-    const dangerColors = {};
 
-    dangerColors["no-data"] = "#808080";
-    dangerColors["no-rating"] = "#808080";
-    dangerColors.low = "#4db848";
-    dangerColors.moderate = "#fcf200";
-    dangerColors.considerable = "#f7941e";
-    dangerColors.high = "#cd1c24";
-    dangerColors.extreme = "#231f20";
-    const maxbounds = [[-127.89,44.09],[-113.88,51.06]]
 
     // Container to put React generated content in.
     this.tooltipContainer = document.createElement('div');
@@ -124,8 +177,13 @@ class Map extends React.Component {
       const features = map.queryRenderedFeatures(e.point);
       console.log(features);
     })
+
+    this.setState({'mapobj' : map})
     
   }
+
+
+
 
   render() {
     console.log(this.state.loading)
@@ -138,7 +196,10 @@ class Map extends React.Component {
           <LegendItem text="Considerable" color='#f7941e'/>
           <LegendItem text="High" color='#cd1c24'/>
           <LegendItem text="Extreme" color='#231f20'/>
+          <span><button id={'above'} onClick={this.change_elev}>⬆️🌲</button><button id={'at'} onClick={this.change_elev}>🌲</button><button id={'below'} onClick={this.change_elev}>⬇️🌲</button></span>
+          <div style={{'text-align' : 'center', "width" : "100%"}}>{this.state.elev_band}</div>
          </div>
+
       </div>
     );
   }

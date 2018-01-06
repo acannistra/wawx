@@ -14,15 +14,23 @@ export default class ConditionsBox extends React.Component{
 	region;
 	summary;
 	url;
+	time;
+	problems;
+	danger;
 
 
 	render() {
 
 		return(<div>
 				<a target={'_blank'} href={this.props.url}> <h1>{this.props.region}</h1></a>
+				<small>{this.props.time}</small>
 			 	<div>
-			 		<h2>Summary:</h2>
+			 		<h2>Summary: </h2>
 			 		{this.props.summary}
+			 		<h2>Problems:</h2>
+			 		{this.props.problems}
+			 		<h2>Danger:</h2>
+			 		{this.props.danger}
 			 	</div>
 			   </div>)
 	}
