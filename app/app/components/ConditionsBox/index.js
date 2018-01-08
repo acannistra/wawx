@@ -8,7 +8,6 @@ import 'mapbox-gl/dist/svg/mapboxgl-ctrl-geolocate.svg';
 import 'mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-in.svg';
 import 'mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg';
 import Tooltip from 'components/Tooltip'
-import {Spinner} from 'react-spinkit'
 
 export default class ConditionsBox extends React.Component{
 	region;
@@ -20,8 +19,12 @@ export default class ConditionsBox extends React.Component{
 
 
 	render() {
+		var style = {
+			'overflow-y' : 'scroll',
+			'height' : '100%'
+		}
 
-		return(<div>
+		return(<div style={style}>
 				<a target={'_blank'} href={this.props.url}> <h1>{this.props.region}</h1></a>
 				<small>{this.props.time}</small>
 			 	<div>

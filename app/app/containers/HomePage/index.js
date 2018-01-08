@@ -15,9 +15,9 @@ import Map from 'components/Map';
 import ConditionsBox from 'components/ConditionsBox';
 import styled from 'styled-components';
 import messages from './messages';
-import {Row, Col} from 'elemental'
+import {Row, Col, Glyph} from 'elemental'
 import '!!style-loader!css-loader!../../root.css';
-//var axios = require('axios');
+var axios = require('axios');
 
 export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 	constructor(props){
@@ -34,9 +34,16 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 		this.conditionClickHandler = this.conditionClickHandler.bind(this)
 	};
 
+
 	handler (features){
 		var api_url = "https://h0g1asmd41.execute-api.us-west-2.amazonaws.com/dev/region?name="
 		var zone_name = features.url.split('/')[3]
+		this.setState({
+				'issuedTime' : "Loading...",
+				'problems'   : "Loading...",
+				'danger'     : "Loading..."
+
+			})
 		var updateFromAPI = function(data){
 			this.setState({
 				'issuedTime' : data.data.updateTime,
@@ -74,13 +81,23 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 		};
 		return (
 		  <Row style={{'height' : '100%'}}>
-			<Col xs="33%" sm="75%" lg="80.333%">
-		    	<Map forecastText={this.forecastText} conditionClickHandler={this.conditionClickHandler} handler = {this.handler}/>
+			<Col width="15%" xs="2/3">
+				<Row width="100%" style={{'height' : "80%"}}>
+					<Col width="100%">
+						<Map forecastText={this.forecastText} conditionClickHandler={this.conditionClickHandler} handler = {this.handler}/>
+					</Col>
+				</Row>
+				<Row style={{"height" : "20%"}}>
+					<Col width="100%">
+						<h2> Test</h2>
+					</Col>
+				</Row>
+
 		    </Col>
-		    <Col xs="66%" sm="25%" lg='19.666%'>
+		    <Col xs="1/3">
+		    	<Glyph icon='thumbsup'/>
 		    	<ConditionsBox summary={this.state.clickedForecast} region={this.state.clickedRegion} url={this.state.clickedURL} time={this.state.issuedTime} problems={this.state.problems} danger={this.state.danger}/>
 		    </Col>
-		    
 		  </Row>
 		);
 	}

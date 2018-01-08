@@ -11,7 +11,7 @@ import 'mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-in.svg';
 import 'mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg';
 import Tooltip from 'components/Tooltip'
 import {Spinner} from 'elemental'
-
+var axios = require('axios')
 
 mapboxgl.accessToken = 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4M29iazA2Z2gycXA4N2pmbDZmangifQ.-g_vE53SD2WrJ6tFX7QHmA';
 
@@ -101,8 +101,7 @@ class Map extends React.Component {
   }
 
   setTooltip(features) {
-    console.log("set tooltop")
-    axios.get("https://h0g1asmd41.execute-api.us-west-2.amazonaws.com/dev/region?name=olympics").then(function(data){console.log(data)})
+    
     if (features.length) {
       const renderFeature = (feature, i) => {
         if (feature.layer['source'] == "nwac-danger"){
@@ -126,7 +125,7 @@ class Map extends React.Component {
 
     const map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/mapbox/streets-v10',
+      style: 'mapbox://styles/mapbox/satellite-streets-v9',
       center: [-122, 47],
       zoom: 6, 
       minZoom: 6,
@@ -177,6 +176,15 @@ class Map extends React.Component {
       const features = map.queryRenderedFeatures(e.point);
       console.log(features);
     })
+
+    map.on('zoom', (e) => {
+      console.log(map.getZoom())
+      var min_zoom = 7
+      var max_zoom = 10
+      var opacity = (max_zoom - map.getZoom()) /  (max_zoom - min_zoom)
+      console.log('\t' + opacity)
+      map.setPaintProperty('nwac-danger', 'fill-opacity', opacity)
+    });
 
     this.setState({'mapobj' : map})
     
