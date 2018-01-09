@@ -24,10 +24,11 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 		super(props);
 		this.state = {
 			'clickedForecast': '',
+			'currentZone' : "",
 			'clickedRegion' : 'None Selected',
 			'clickedURL' : '',
 			'issuedTime' : '',
-			'problems' : '',
+			'problems' : 'None',
 			'danger' : ''
 		}; 
 		this.handler = this.handler.bind(this)
@@ -38,16 +39,20 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 	handler (features){
 		var api_url = "https://h0g1asmd41.execute-api.us-west-2.amazonaws.com/dev/region?name="
 		var zone_name = features.url.split('/')[3]
+		if(zone_name === this.state.currentZone) {
+			return;
+		} else {
+			this.setState({'currentZone' : zone_name})
+		}
 		this.setState({
 				'issuedTime' : "Loading...",
-				'problems'   : "Loading...",
 				'danger'     : "Loading..."
 
 			})
 		var updateFromAPI = function(data){
 			this.setState({
 				'issuedTime' : data.data.updateTime,
-				'problems'   : JSON.stringify(data.data.problems),
+				'problems'   : data.data.problems,
 				'danger'     : JSON.stringify(data.data.danger)
 
 			})
@@ -79,17 +84,60 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 			'right' : '0px',
 			'bottom': '0px'
 		};
+
+		const wx_plots = [
+			{
+				name:"12km SLP",
+				src:"https://atmos.washington.edu/wrfrt/data/timeindep/images_d2/slp.00.0000.gif",
+				url:"https://atmos.washington.edu/~ovens/wxloop.cgi?wrfd2_slp+///3"
+			},
+			{
+				name:"36km SLP",
+				src:"https://atmos.washington.edu/wrfrt/data/timeindep/images_d1/slp.00.0000.gif",
+				url:"https://atmos.washington.edu/~ovens/wxloop.cgi?wrfd1_slp+///3"
+			},
+			{
+				name:"12km Temperature",
+				src:"https://atmos.washington.edu/wrfrt/data/timeindep/images_d2/tsfc.00.0000.gif",
+				url:"https://atmos.washington.edu/~ovens/wxloop.cgi?wrfd2_tsfc+///3"
+			},
+			{
+				name:"12km (WA) 24-hour Precip",
+				url:"https://atmos.washington.edu/~ovens/wxloop.cgi?wrfd2_wa_pcp24+///3",
+				src:"https://atmos.washington.edu/wrfrt/data/timeindep/images_d2/wa_pcp24.24.0000.gif"
+			}
+
+		]
+
+		const _wx_plots = wx_plots.map(function(x){
+			var img_style = {  
+				"display": 'block',
+				"max-width":'100%',
+				'max-height':'100%',
+				'width': 'auto',
+				'height': 'auto',
+			};
+
+			return(<Col sm="25%" height="100%">
+				   	<a href={x.url} target="_blank" style={{'height' : "100%"}}>
+				   		<img src={x.src} style={img_style} />
+				   	</a>
+				   </Col>)
+		})
+
 		return (
 		  <Row style={{'height' : '100%'}}>
 			<Col width="15%" xs="2/3">
 				<Row width="100%" style={{'height' : "80%"}}>
-					<Col width="100%">
+					<Col width="100%" height="100%">
 						<Map forecastText={this.forecastText} conditionClickHandler={this.conditionClickHandler} handler = {this.handler}/>
 					</Col>
 				</Row>
 				<Row style={{"height" : "20%"}}>
-					<Col width="100%">
-						<h2> Test</h2>
+					<Col height="100%">
+						<Row height="100%">
+							{_wx_plots}
+						</Row>
 					</Col>
 				</Row>
 

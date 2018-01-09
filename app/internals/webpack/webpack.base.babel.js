@@ -116,7 +116,7 @@ module.exports = (options) => ({
       'webworkify': 'webworkify-webpack'
     }
   },
-  devtool: 'eval',//options.devtool,
+  devtool: 'eval-source-map',//options.devtool,
   target: 'web', // Make web variables accessible to webpack, e.g. window
   performance: options.performance || {},
 });
