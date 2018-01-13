@@ -10,6 +10,10 @@ import 'mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg';
 import Tooltip from 'components/Tooltip';
 import Problem from 'components/Problem';
 
+const Container  = styled.div`
+	padding: 1em;
+`;
+
 export default class ConditionsBox extends React.Component{
 	region;
 	summary;
@@ -36,7 +40,7 @@ export default class ConditionsBox extends React.Component{
 		console.log('nextprobs')
 		console.log(_probs)
 
-		return(<div style={style}>
+		return(<Container style={style}>
 				<a target={'_blank'} href={this.props.url}> <h1>{this.props.region}</h1></a>
 				<small>{this.props.time}</small>
 			 	<div>
@@ -47,6 +51,6 @@ export default class ConditionsBox extends React.Component{
 			 		<h2>Danger:</h2>
 			 		{this.props.danger}
 			 	</div>
-			   </div>)
+			   </Container>)
 	}
 };

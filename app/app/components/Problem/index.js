@@ -9,6 +9,10 @@ import 'mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-in.svg';
 import 'mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg';
 import {Row, Col} from 'elemental';
 
+const NWACImage = styled(Col)`
+	max-width: 200px;
+`;
+
 export default class Problem extends React.Component {
 	name;
 	rose_url;
@@ -21,17 +25,20 @@ export default class Problem extends React.Component {
 
 
 		return(<div>
-			<span style={{'width' : '100%', 'text-align' : 'center'}}>{this.props.name}</span>
-			<Row>
-				<Col sm="1/3">
+			<div style={{'width' : '100%', 'text-align' : 'center'}}><h3>{this.props.name}</h3></div>
+			<Row style={{'width' : "100%", 'margin' : 'auto'}}>
+				<NWACImage sm="1/3">
+					<div style={{'width' : "100%", 'text-align' : 'center'}}>Aspects</div>
 					<img width="100%" src={this.props.rose_url}/>
-				</Col>
-				<Col sm="1/3">
+				</NWACImage>
+				<NWACImage sm="1/3">
+					<div style={{'width' : "100%", 'text-align' : 'center'}}>Likelihood</div>
 					<img width="100%" src={this.props.prob_url}/>
-				</Col>
-				<Col sm="1/3">
+				</NWACImage>
+				<NWACImage sm="1/3">
+					<div style={{'width' : "100%", 'text-align' : 'center'}}>Size</div>
 					<img width="100%" src={this.props.size_url}/>
-				</Col>
+				</NWACImage>
 			</Row>
 		</div>);
 	}

@@ -127,7 +127,11 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 
 		return (
 		  <Row style={{'height' : '100%'}}>
-			<Col width="15%" xs="2/3">
+		    <Col xs="2/3">
+		    	<Glyph icon='thumbsup'/>
+		    	<ConditionsBox summary={this.state.clickedForecast} region={this.state.clickedRegion} url={this.state.clickedURL} time={this.state.issuedTime} problems={this.state.problems} danger={this.state.danger}/>
+		    </Col>
+		    <Col xs="1/3">
 				<Row width="100%" style={{'height' : "80%"}}>
 					<Col width="100%" height="100%">
 						<Map forecastText={this.forecastText} conditionClickHandler={this.conditionClickHandler} handler = {this.handler}/>
@@ -141,10 +145,6 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 					</Col>
 				</Row>
 
-		    </Col>
-		    <Col xs="1/3">
-		    	<Glyph icon='thumbsup'/>
-		    	<ConditionsBox summary={this.state.clickedForecast} region={this.state.clickedRegion} url={this.state.clickedURL} time={this.state.issuedTime} problems={this.state.problems} danger={this.state.danger}/>
 		    </Col>
 		  </Row>
 		);
