@@ -8,6 +8,7 @@ import {Row, Col, Glyph} from 'elemental'
 import '!!style-loader!css-loader!../../root.css';
 var axios = require('axios');
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import Welcome from 'components/Welcome';
 import 'react-tabs/style/react-tabs.css';
 
 
@@ -18,11 +19,12 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 		this.state = {
 			'clickedForecast': '',
 			'currentZone' : "",
-			'clickedRegion' : 'None Selected',
+			'interaction' : false,
+			'clickedRegion' : "None",
 			'clickedURL' : '',
 			'issuedTime' : '',
 			'problems' : 'None',
-			'danger' : ''
+			'danger' : 'None'
 		}; 
 		this.handler = this.handler.bind(this)
 		this.conditionClickHandler = this.conditionClickHandler.bind(this)
@@ -43,10 +45,10 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 
 			})
 		var updateFromAPI = function(data){
-			this.setState({
+ 			this.setState({
 				'issuedTime' : data.data.updateTime,
 				'problems'   : data.data.problems,
-				'danger'     : JSON.stringify(data.data.danger)
+				'danger'     : data.data.danger
 
 			})
 			console.log(this.state)
@@ -56,7 +58,8 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 		this.setState({
 			'clickedForecast' : decodeURIComponent(features.bottom_line_summary.replace(/&nbsp;/g, " ")), 
 			'clickedRegion' : features.zone_abbreviated_name,
-			'clickedURL' : features.zone_url
+			'clickedURL' : features.zone_url, 
+			'interaction' : true
 		})
 	}
 
@@ -121,7 +124,9 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 		return (
 		  <Row style={{'height' : '100%'}}>
 		    <Col xs="2/3">
+		    	{!this.state.interaction ? <Welcome></Welcome> : 
 		    	<ConditionsBox summary={this.state.clickedForecast} region={this.state.clickedRegion} url={this.state.clickedURL} time={this.state.issuedTime} problems={this.state.problems} danger={this.state.danger}/>
+		    	}
 		    </Col>
 		    <Col xs="1/3">
 				<Row width="100%" style={{'height' : "80%"}}>
