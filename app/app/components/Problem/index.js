@@ -23,7 +23,6 @@ export default class Problem extends React.Component {
 
 	render(){
 		return(<div>
-			<div style={{'width' : '100%', 'text-align' : 'center'}}><h3>{this.props.name}</h3></div>
 			<Row center='xs'>
 				<NWACImage sm="1/3">
 					<div style={{'width' : "100%", 'text-align' : 'center'}}>Aspects</div>
