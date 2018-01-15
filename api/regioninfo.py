@@ -36,7 +36,7 @@ def _getProblems(fcst):
         this['name'] = problem.select(
             "div.problem-description h3")[0].text.strip()[:-1]
         this['rose_img_url'] = "https://www.nwac.us" + \
-            problem.select('img.problem-octagon')[0].attrs['src']
+            problems[0].select('img.problem-octagon')[0].attrs['src']
         this['likelihood_img_url'] = problem.select(
             'img.problem-likelihood')[0].attrs['src']
         this['size_img_url'] = problem.select(
@@ -52,9 +52,9 @@ def getRegionalForecast(region):
     # Forecast Time
     forecast["updateTime"] = _getUpdatedTime(tree)
     # Elevation Band Danger Levels
-    danger = []
+    danger = {}
     for elev_band in ["treeline-above", 'treeline-near', 'treeline-below']:
-        danger.append({elev_band: _getElevBandForecast(tree, elev_band)})
+        danger[elev_band] = _getElevBandForecast(tree, elev_band)
     forecast['danger'] = danger
     # Problems
     forecast['problems'] = _getProblems(tree)
