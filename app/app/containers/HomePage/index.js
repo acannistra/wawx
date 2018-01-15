@@ -1,14 +1,3 @@
-/*
- * HomePage
- *
- * This is the first thing users see of our App, at the '/' route
- *
- * NOTE: while this component should technically be a stateless functional
- * component (SFC), hot reloading does not currently support SFCs. If hot
- * reloading is not a necessity for you then you can refactor it and remove
- * the linting exception.
- */
-
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import Map from 'components/Map';
@@ -18,6 +7,10 @@ import messages from './messages';
 import {Row, Col, Glyph} from 'elemental'
 import '!!style-loader!css-loader!../../root.css';
 var axios = require('axios');
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
+
+
 
 export default class HomePage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 	constructor(props){
@@ -128,7 +121,6 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 		return (
 		  <Row style={{'height' : '100%'}}>
 		    <Col xs="2/3">
-		    	<Glyph icon='thumbsup'/>
 		    	<ConditionsBox summary={this.state.clickedForecast} region={this.state.clickedRegion} url={this.state.clickedURL} time={this.state.issuedTime} problems={this.state.problems} danger={this.state.danger}/>
 		    </Col>
 		    <Col xs="1/3">
@@ -136,6 +128,7 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 					<Col width="100%" height="100%">
 						<Map forecastText={this.forecastText} conditionClickHandler={this.conditionClickHandler} handler = {this.handler}/>
 					</Col>
+
 				</Row>
 				<Row style={{"height" : "20%"}}>
 					<Col height="100%">
