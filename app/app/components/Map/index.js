@@ -204,7 +204,11 @@ class Map extends React.Component {
           <LegendItem text="Considerable" color='#f7941e'/>
           <LegendItem text="High" color='#cd1c24'/>
           <LegendItem text="Extreme" color='#231f20'/>
-          <span><button id={'above'} onClick={this.change_elev}>⬆️🌲</button><button id={'at'} onClick={this.change_elev}>🌲</button><button id={'below'} onClick={this.change_elev}>⬇️🌲</button></span>
+          <span>
+            <button id={'above'} onClick={this.change_elev}>⬆️🌲</button>
+            <button id={'at'} onClick={this.change_elev}>🌲</button>
+            <button id={'below'} onClick={this.change_elev}>⬇️🌲</button>
+          </span>
           <div style={{'text-align' : 'center', "width" : "100%"}}>{this.state.elev_band}</div>
          </div>
 

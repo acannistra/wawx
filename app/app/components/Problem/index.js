@@ -9,6 +9,7 @@ import 'mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-in.svg';
 import 'mapbox-gl/dist/svg/mapboxgl-ctrl-zoom-out.svg';
 import {Row, Col} from 'elemental';
 
+
 const NWACImage = styled(Col)`
 	max-width: 200px;
 `;
@@ -21,12 +22,9 @@ export default class Problem extends React.Component {
 
 
 	render(){
-		console.log('rendering');
-
-
 		return(<div>
 			<div style={{'width' : '100%', 'text-align' : 'center'}}><h3>{this.props.name}</h3></div>
-			<Row style={{'width' : "100%", 'margin' : 'auto'}}>
+			<Row center='xs'>
 				<NWACImage sm="1/3">
 					<div style={{'width' : "100%", 'text-align' : 'center'}}>Aspects</div>
 					<img width="100%" src={this.props.rose_url}/>
