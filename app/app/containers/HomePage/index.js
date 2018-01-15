@@ -125,7 +125,12 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 		  <Row style={{'height' : '100%'}}>
 		    <Col xs="2/3">
 		    	{!this.state.interaction ? <Welcome></Welcome> : 
-		    	<ConditionsBox summary={this.state.clickedForecast} region={this.state.clickedRegion} url={this.state.clickedURL} time={this.state.issuedTime} problems={this.state.problems} danger={this.state.danger}/>
+		    	<ConditionsBox summary={this.state.clickedForecast}
+		    				   region={this.state.clickedRegion} 
+		    				   url={this.state.clickedURL} 
+		    				   time={this.state.issuedTime} 
+		    				   problems={this.state.problems} 
+		    				   danger={this.state.danger}/>
 		    	}
 		    </Col>
 		    <Col xs="1/3">

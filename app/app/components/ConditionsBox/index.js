@@ -113,34 +113,43 @@ export default class ConditionsBox extends React.Component{
 
 
 		return(<Container style={style}>
-				<h1>
+				<h1 style={{'margin-bottom' : '1px'}}>
 					{topImg}
 					<a target={'_blank'} href={this.props.url}>{this.props.region}</a>
 				</h1>
 				<small>{this.props.time} (Forecast Day: {today})</small>
-			 	<div>
-			 		<h3>Summary: </h3>
-			 		{this.props.summary}
-			 		<h3>Conditions:</h3>	
-			 		<Row>
-			 			<Col xs="1/2">
-			 				<div style={{'width' : "100%", 'text-align' : 'center'}}><b>Problems</b></div>
-			 			</Col>
-			 			<Col xs="1/2">
-			 				<div style={{'width' : "100%", 'text-align' : 'center'}}><b>Danger Levels</b></div>
-			 			</Col>
+				<Tabs>
+					<TabList>
+						<Tab><h4>Avalanche Conditions</h4></Tab>
+						<Tab><h4>Weather Conditions</h4></Tab>
+					</TabList>
 
-			 		</Row>
-			 		<Row>
-			 			<Col xs="1/2">
-							{dangerTabs}
-						</Col>
-						<Col xs="1/2">
-							{dangerTable}
-						</Col>
-			 		</Row>
+					<TabPanel>
+					 	<div>
+					 		
+					 		<b>Summary: </b> {this.props.summary}
+					 		<h3>Conditions:</h3>	
+					 		<Row>
+					 			<Col xs="1/2">
+					 				<div style={{'width' : "100%", 'text-align' : 'center'}}><b>Problems</b></div>
+					 			</Col>
+					 			<Col xs="1/2">
+					 				<div style={{'width' : "100%", 'text-align' : 'center'}}><b>Danger Levels</b></div>
+					 			</Col>
 
-			 	</div>
+					 		</Row>
+					 		<Row>
+					 			<Col xs="1/2">
+									{dangerTabs}
+								</Col>
+								<Col xs="1/2">
+									{dangerTable}
+								</Col>
+					 		</Row>
+
+					 	</div>
+					</TabPanel>
+				</Tabs>
 			   </Container>)
 	}
 };
