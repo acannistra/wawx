@@ -198,7 +198,7 @@ class Map extends React.Component {
     return (
       <div style={{'min-height': "100%"}} id='map'>
         <div id='danger-legend' className='legend'>
-          <h4>Danger Levels</h4>
+          <div style={{'text-align': 'center'}}><b>Danger Levels</b></div>
           <LegendItem text="Low" color='#4db848'/>
           <LegendItem text="Moderate" color='#fcf200'/>
           <LegendItem text="Considerable" color='#f7941e'/>
@@ -217,6 +217,11 @@ class Map extends React.Component {
   }
 }
 
+
+
+
+export  {Map};
+export {dangerColors};
 export default Map;
 
 Map.PropTypes = {

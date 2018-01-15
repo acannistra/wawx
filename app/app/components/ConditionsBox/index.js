@@ -11,8 +11,21 @@ import Tooltip from 'components/Tooltip';
 import Problem from 'components/Problem';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import {Row, Col} from 'elemental';
+import {dangerColors} from 'components/Map'
+import {Badge,Table} from 'reactstrap';
+
+import 'bootstrap/dist/css/bootstrap.css';
 import 'react-tabs/style/react-tabs.css';
 
+const dangerImages = {
+	'no-data' : "",
+	'no-rating' : "",
+	'low' : 'https://www.nwac.us/static/images/danger-levels/low.png',
+	'moderate' : 'https://www.nwac.us/static/images/danger-levels/moderate.png',
+	'considerable' : 'https://www.nwac.us/static/images/danger-levels/considerable.png',
+	'high' : 'https://www.nwac.us/static/images/danger-levels/high.png',
+	'extreme' : 'https://www.nwac.us/static/images/danger-levels/extreme.png'
+}
 
 
 const Container  = styled.div`
@@ -29,6 +42,7 @@ export default class ConditionsBox extends React.Component{
 
 
 	render() {
+
 		var style = {
 			'overflow-y' : 'scroll',
 			'height' : '100%'
@@ -47,7 +61,7 @@ export default class ConditionsBox extends React.Component{
 		}
 
 		var dangerTabs = (
-			<Tabs>
+			<Tabs defaultIndex={1}>
 				<TabList>
 					{_tabs}
 				</TabList>
@@ -55,23 +69,77 @@ export default class ConditionsBox extends React.Component{
 			</Tabs>
 		)
 
+		var dangerTable = ""
+		try{
+			var today = this.props.danger['treeline-above'].now.day
+			var topImg = (
+				<img style={{'margin' : '5px'}} src={dangerImages[this.props.danger['treeline-above'].now.danger.toLowerCase()]}/>
+			);
+			var dangerTable = (
+				<Table size='sm'>
+					<thead>
+						<tr>
+							<th>Elevation</th>
+							<th>Today</th>
+							<th>Tomorrow</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope='row'><img style={{'max-height': '46px'}} src="https://www.nwac.us/static/images/treeline-above.png"/></th>
+							<td><img src={dangerImages[this.props.danger['treeline-above'].now.danger.toLowerCase()]}/></td>
+							<td><img src={dangerImages[this.props.danger['treeline-above'].tomorrow.danger.toLowerCase()]}/></td>
+						</tr>
+						<tr>
+							<th scope='row'><img style={{'max-height': '46px'}} src="https://www.nwac.us/static/images/treeline-near.png"/></th>
+							<td><img src={dangerImages[this.props.danger['treeline-near'].now.danger.toLowerCase()]}/></td>
+							<td><img src={dangerImages[this.props.danger['treeline-near'].tomorrow.danger.toLowerCase()]}/></td>
+						</tr>
+						<tr>
+							<th scope='row'><img style={{'max-height': '46px'}} src="https://www.nwac.us/static/images/treeline-below.png"/></th>
+							<td><img src={dangerImages[this.props.danger['treeline-below'].now.danger.toLowerCase()]}/></td>
+							<td><img src={dangerImages[this.props.danger['treeline-below'].tomorrow.danger.toLowerCase()]}/></td>
+						</tr>
+					</tbody>
+				</Table>
+				
+			)
+		} catch (err){
+			console.log(err)
+			var dangerTable = "";
+			var topImg = ""
+			var today = "..."
+		}
+
+
 		return(<Container style={style}>
-				<a target={'_blank'} href={this.props.url}> <h1>{this.props.region}</h1></a>
-				<small>{this.props.time}</small>
+				<h1>
+					{topImg}
+					<a target={'_blank'} href={this.props.url}>{this.props.region}</a>
+				</h1>
+				<small>{this.props.time} (Forecast Day: {today})</small>
 			 	<div>
-			 		<h2>Summary: </h2>
+			 		<h3>Summary: </h3>
 			 		{this.props.summary}
-			 		<h2>Problems:</h2>	
+			 		<h3>Conditions:</h3>	
+			 		<Row>
+			 			<Col xs="1/2">
+			 				<div style={{'width' : "100%", 'text-align' : 'center'}}><b>Problems</b></div>
+			 			</Col>
+			 			<Col xs="1/2">
+			 				<div style={{'width' : "100%", 'text-align' : 'center'}}><b>Danger Levels</b></div>
+			 			</Col>
+
+			 		</Row>
 			 		<Row>
 			 			<Col xs="1/2">
 							{dangerTabs}
 						</Col>
 						<Col xs="1/2">
-							Something Else
+							{dangerTable}
 						</Col>
 			 		</Row>
-			 		<h2>Danger:</h2>
-			 		{this.props.danger}
+
 			 	</div>
 			   </Container>)
 	}
