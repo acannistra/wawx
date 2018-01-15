@@ -16,7 +16,9 @@ export default class Welcome extends React.Component{
 	render(){
 		return(<WelcomeContainer>
 			<h1> NWAC v2 <small> by <a href="http://www.anthonycannistra.com/about">Tony Cannistra</a></small></h1>
-			Click a region on the map. 
+			<p>Click a region on the map. </p>
+
+			<div style={{'display' : 'inline-block'}} class="align-bottom">USE AT YOUR OWN RISK.</div>
 		</WelcomeContainer>)
 	}
 }
