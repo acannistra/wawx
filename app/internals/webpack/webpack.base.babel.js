@@ -98,6 +98,9 @@ module.exports = (options) => ({
     ],
   },
   plugins: options.plugins.concat([
+    new webpack.DefinePlugin({
+      "CODE_VERSION" : JSON.stringify(process.env.CODE_VERSION)
+    }),
     new webpack.ProvidePlugin({
       // make fetch available
       fetch: 'exports-loader?self.fetch!whatwg-fetch',
@@ -108,10 +111,10 @@ module.exports = (options) => ({
     // drop any unreachable code.
     new webpack.DefinePlugin({
       'process.env': {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
       },
     }),
-    new webpack.NamedModulesPlugin(),
+    new webpack.NamedModulesPlugin()
   ]),
   resolve: {
     modules: ['app', 'node_modules'],

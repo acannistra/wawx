@@ -13,12 +13,17 @@ const WelcomeContainer = styled.div`
 `;
 
 export default class Welcome extends React.Component{
-	render(){
+	render(){	
+
 		return(<WelcomeContainer>
 			<h1> NWAC v2 <small> by <a href="http://www.anthonycannistra.com/about">Tony Cannistra</a></small></h1>
 			<p>Click a region on the map. </p>
 
 			<div style={{'display' : 'inline-block'}} class="align-bottom">USE AT YOUR OWN RISK.</div>
+			<div>
+				<small><a target="_blank" href={"https://github.com/acannistra/wawx/tree/" + CODE_VERSION}>
+						 v.{CODE_VERSION}</a></small>
+			</div>
 		</WelcomeContainer>)
 	}
 }
