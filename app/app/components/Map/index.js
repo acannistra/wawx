@@ -42,6 +42,15 @@ class LegendItem extends React.Component{
   }
 }
 
+const LogoHolder = styled.div`
+  z-index: 1;
+  padding: 10px;
+  position: absolute;
+  top: 0;
+  left: 0; 
+  width: 40%;
+`;
+
 class Map extends React.Component {
   tooltipContainer;
 
@@ -199,6 +208,9 @@ class Map extends React.Component {
     console.log(this.state.loading)
     return (
       <div style={{'min-height': "100%"}} id='map'>
+        <LogoHolder>
+         <a href="http://www.nwac.org" target="_blank"><img style={{'max-width' : "100%"}} src="https://www.nwac.us/static/common/images/nwac-logo.jpg"/></a>
+        </LogoHolder>
         <div id='danger-legend' className='legend'>
           <div style={{'text-align': 'center'}}><b>Danger Levels</b></div>
           <LegendItem text="Low" color='#4db848'/>
@@ -213,7 +225,6 @@ class Map extends React.Component {
           </span>
           <div style={{'text-align' : 'center', "width" : "100%"}}>{this.state.elev_band}</div>
          </div>
-
       </div>
     );
   }
