@@ -154,6 +154,8 @@ class Map extends React.Component {
             }
         })
     });
+
+
     map.addControl(new mapboxgl.ScaleControl({
         maxWidth: 200 ,
         unit: 'imperial'

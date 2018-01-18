@@ -148,21 +148,9 @@ export default class ConditionsBox extends React.Component{
 						<Row>
 							<Col sm="1">
 								<small>{this.props.time} (Forecast Day: {today})</small>
+
 							</Col>
 						</Row>
-					</Col>
-					<Col sm="1/2">
-						<b>Summary: </b> {this.props.summary}
-					</Col>
-				</Row>
-
-				<Tabs>
-					<TabList>
-						<Tab><b>Avalanche Conditions</b></Tab>
-						<Tab><b>Weather Conditions</b></Tab>
-					</TabList>
-
-					<TabPanel>
 						<Row style={{'margin-top' : '5px', 'margin-bottom' : '5px'}}>
 							<Col xs="1/2">
 								<Button color='info' onClick={this.toggle_summary}>Detailed Summary</Button>
@@ -191,6 +179,20 @@ export default class ConditionsBox extends React.Component{
 				 		       	</Modal>
 			 		       	</Col>
 		 		       	</Row>
+					</Col>
+					<Col sm="1/2">
+						<b>Summary: </b> {this.props.summary}
+					</Col>
+				</Row>
+
+				<Tabs>
+					<TabList>
+						<Tab><b>Avalanche Conditions</b></Tab>
+						<Tab><b>Weather Conditions</b></Tab>
+					</TabList>
+
+					<TabPanel>
+						
 		 		       	<Row style={{'margin-top' : '10px', 'margin-bottom' : '5px', 'border-top' : '1px'}}>
 		 		       		<Col xs="1/2">
 		 		       			<div style={{"width" : "100%"}}><h5 style={{"text-align" : 'center'}}>Elevation Danger</h5></div>
