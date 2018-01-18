@@ -24,7 +24,9 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 			'clickedURL' : '',
 			'issuedTime' : '',
 			'problems' : 'None',
-			'danger' : 'None'
+			'danger' : 'None', 
+			'detailedForecast': 'Loading...',
+			'detailedSummary' : 'Loading...'
 		}; 
 		this.handler = this.handler.bind(this)
 		this.conditionClickHandler = this.conditionClickHandler.bind(this)
@@ -48,8 +50,9 @@ export default class HomePage extends React.Component { // eslint-disable-line r
  			this.setState({
 				'issuedTime' : data.data.updateTime,
 				'problems'   : data.data.problems,
-				'danger'     : data.data.danger
-
+				'danger'     : data.data.danger, 
+				'detailedForecast' : data.data.detailed_forecast,
+				'detailedSummary' : data.data.detailed_summary
 			})
 			console.log(this.state)
 		}
@@ -83,6 +86,14 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 
 		return (
 		  <Row style={{'height' : '100%'}}>
+			<Col xs="1/3">
+				<Row width="100%" style={{'height' : "100%"}}>
+					<Col width="100%" height="100%">
+						<Map forecastText={this.forecastText} conditionClickHandler={this.conditionClickHandler} handler = {this.handler}/>
+					</Col>
+
+				</Row>
+			</Col>
 		    <Col xs="2/3">
 		    	{!this.state.interaction ? <Welcome></Welcome> : 
 		    	<ConditionsBox summary={this.state.clickedForecast}
@@ -90,16 +101,10 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 		    				   url={this.state.clickedURL} 
 		    				   time={this.state.issuedTime} 
 		    				   problems={this.state.problems} 
-		    				   danger={this.state.danger}/>
+		    				   danger={this.state.danger}
+		    				   detailedForecast = {this.state.detailedForecast}
+		    				   detailedSummary = {this.state.detailedSummary}/>
 		    	}
-		    </Col>
-		    <Col xs="1/3">
-				<Row width="100%" style={{'height' : "100%"}}>
-					<Col width="100%" height="100%">
-						<Map forecastText={this.forecastText} conditionClickHandler={this.conditionClickHandler} handler = {this.handler}/>
-					</Col>
-
-				</Row>
 		    </Col>
 		  </Row>
 		);

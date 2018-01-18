@@ -12,7 +12,7 @@ import Problem from 'components/Problem';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import {Row, Col} from 'elemental';
 import {dangerColors} from 'components/Map'
-import {Badge,Table} from 'reactstrap';
+import {Badge,Table, Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 
 import 'bootstrap/dist/css/bootstrap.css';
 import 'react-tabs/style/react-tabs.css';
@@ -38,7 +38,29 @@ export default class ConditionsBox extends React.Component{
 	url;
 	time;
 	problems;
+	detailedForecast;
+	detailedSummary;
 	danger;
+
+	constructor(props){
+		super(props);
+		this.toggle_details = this.toggle_details.bind(this);
+		this.toggle_summary = this.toggle_summary.bind(this);
+		this.state = { 
+			details_open : false,
+			summary_open : false,
+		}
+	}
+
+	toggle_details() {
+		this.setState({ details_open : !this.state.details_open })
+	}
+	toggle_summary(){
+		this.setState(
+		{
+			summary_open : !this.state.summary_open
+		})
+	}
 
 
 	render() {
@@ -133,8 +155,6 @@ export default class ConditionsBox extends React.Component{
 						<b>Summary: </b> {this.props.summary}
 					</Col>
 				</Row>
-				
-
 
 				<Tabs>
 					<TabList>
@@ -142,19 +162,52 @@ export default class ConditionsBox extends React.Component{
 						<Tab><b>Weather Conditions</b></Tab>
 					</TabList>
 
-					<TabPanel>/
-					 	<div>
-					 		<Row>
-						 		<Col xs="1/2">
-						 			{dangerTable}
-						 		</Col>
-					 			<Col xs="1/2">
-									{dangerTabs}
-								</Col>
+					<TabPanel>
+						<Row style={{'margin-top' : '5px', 'margin-bottom' : '5px'}}>
+							<Col xs="1/2">
+								<Button color='info' onClick={this.toggle_summary}>Detailed Summary</Button>
+				 		        <Modal isOpen={this.state.summary_open} toggle={this.toggle_summary} style={{'max-width': '1000px'}}>
+				 		          <ModalHeader toggle={this.toggle_summary}>Detailed Summary for {today}</ModalHeader>
+				 		          <ModalBody>
+				 		          	{this.props.detailedSummary}
+				 		          </ModalBody>
+				 		          <ModalFooter>
+				 		            <Button color="primary" onClick={this.toggle_summary}>Close ⎋</Button>{' '}
 
-					 		</Row>
-					 				
-					 	</div>
+				 		          </ModalFooter>
+				 		       	</Modal>
+			 		       	</Col>
+
+			 		       	<Col xs="1/2">
+						 		<Button color='info' onClick={this.toggle_details}>{this.props.detailedForecast.forecast_title}</Button>
+				 		        <Modal isOpen={this.state.details_open} toggle={this.toggle_details} style={{'max-width': '1000px'}}>
+				 		          <ModalHeader toggle={this.toggle_details}>{this.props.detailedForecast.forecast_title}</ModalHeader>
+				 		          <ModalBody>
+				 		          	{this.props.detailedForecast.forecast}
+				 		          </ModalBody>
+				 		          <ModalFooter>
+				 		            <Button color="primary" onClick={this.toggle_details}>Close ⎋</Button>{' '}
+				 		          </ModalFooter>
+				 		       	</Modal>
+			 		       	</Col>
+		 		       	</Row>
+		 		       	<Row style={{'margin-top' : '10px', 'margin-bottom' : '5px', 'border-top' : '1px'}}>
+		 		       		<Col xs="1/2">
+		 		       			<div style={{"width" : "100%"}}><h5 style={{"text-align" : 'center'}}>Elevation Danger</h5></div>
+		 		       		</Col>
+		 		       		<Col xs="1/2">
+		 		       			<div style={{"width" : "100%"}}><h5 style={{"text-align" : 'center'}}>Avalanche Problems Present	</h5></div>
+		 		       		</Col>
+		 		       	</Row>
+				 		<Row>
+					 		<Col xs="1/2">
+					 			{dangerTable}
+					 		</Col>
+				 			<Col xs="1/2">
+								{dangerTabs}
+							</Col>
+
+				 		</Row>
 					</TabPanel>
 				</Tabs>
 			   </Container>)

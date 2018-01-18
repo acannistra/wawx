@@ -44,6 +44,26 @@ def _getProblems(fcst):
         result.append(this)
     return(result)
 
+def _get_detailed_summary(fcst):
+    ta = fcst.find(id='discussion')
+    allp = ta.find_all('p')
+    summary = ""
+    it = 0
+    text = ""
+    while text != "Observations":
+        summary += text + '\n'
+        text = allp[it].text
+        it += 1
+    return summary.strip()
+
+def _get_detailed_forecast(fcst):
+    fd = fcst.find(class_='forecast-detailed')
+    title = fd.find('h2').text[0:-1]
+    return({
+        'forecast_title' : title,
+        'forecast' : "\n".join(map(lambda x: x.text, fd.find_all('p')))
+    })
+
 
 def getRegionalForecast(region):
     forecast = {}
@@ -58,4 +78,6 @@ def getRegionalForecast(region):
     forecast['danger'] = danger
     # Problems
     forecast['problems'] = _getProblems(tree)
+    forecast['detailed_summary'] = _get_detailed_summary(tree)
+    forecast['detailed_forecast'] = _get_detailed_forecast(tree)
     return(forecast)
