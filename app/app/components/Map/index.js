@@ -209,7 +209,7 @@ class Map extends React.Component {
     return (
       <div style={{'min-height': "100%"}} id='map'>
         <LogoHolder>
-         <a href="http://www.nwac.org" target="_blank"><img style={{'max-width' : "100%"}} src="https://www.nwac.us/static/common/images/nwac-logo.jpg"/></a>
+         <a href="http://www.nwac.us" target="_blank"><img style={{'max-width' : "100%"}} src="https://www.nwac.us/static/common/images/nwac-logo.jpg"/></a>
         </LogoHolder>
         <div id='danger-legend' className='legend'>
           <div style={{'text-align': 'center'}}><b>Danger Levels</b></div>
