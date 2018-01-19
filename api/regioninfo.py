@@ -36,7 +36,7 @@ def _getProblems(fcst):
         this['name'] = problem.select(
             "div.problem-description h3")[0].text.strip()[:-1]
         this['rose_img_url'] = "https://www.nwac.us" + \
-            problems[0].select('img.problem-octagon')[0].attrs['src']
+            problem.select('img.problem-octagon')[0].attrs['src']
         this['likelihood_img_url'] = problem.select(
             'img.problem-likelihood')[0].attrs['src']
         this['size_img_url'] = problem.select(
