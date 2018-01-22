@@ -1,4 +1,4 @@
-# NWAC v2
+# NWAC v2 [![Build Status](https://travis-ci.org/acannistra/wawx.svg?branch=master)](https://travis-ci.org/acannistra/wawx)
 
 The purpose of this project is to create another interface to the avalanche forecast and weather data available at the Northwest Avalanche Center's [website](http://www.nwac.us). In my opinion, too much clicking is required to evaluate statewide avalanche hazard.
 
