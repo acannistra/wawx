@@ -5,5 +5,5 @@ before_script:
  - cd app
  - npm install 
 script:
- - cd app
+ - pwd
  - npm build 
