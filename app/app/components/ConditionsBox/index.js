@@ -12,6 +12,7 @@ import Problem from 'components/Problem';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import {Row, Col} from 'elemental';
 import {dangerColors} from 'components/Map'
+import WeatherPanel from 'components/WeatherPanel'
 import {Badge,Table, Button, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -210,6 +211,10 @@ export default class ConditionsBox extends React.Component{
 							</Col>
 
 				 		</Row>
+					</TabPanel>
+					<TabPanel>
+						<WeatherPanel region={this.props.region}>
+						</WeatherPanel>
 					</TabPanel>
 				</Tabs>
 			   </Container>)
