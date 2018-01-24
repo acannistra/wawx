@@ -41,15 +41,19 @@ export default class ConditionsBox extends React.Component{
 	problems;
 	detailedForecast;
 	detailedSummary;
+	weather;
 	danger;
 
 	constructor(props){
 		super(props);
 		this.toggle_details = this.toggle_details.bind(this);
 		this.toggle_summary = this.toggle_summary.bind(this);
+		var url_slugs = this.props.url.split("/")
+		var region_slug = url_slugs[url_slugs.length - 1];
 		this.state = { 
 			details_open : false,
 			summary_open : false,
+			region_slug : region_slug
 		}
 	}
 
@@ -185,38 +189,41 @@ export default class ConditionsBox extends React.Component{
 						<b>Summary: </b> {this.props.summary}
 					</Col>
 				</Row>
+				<Row>
+					<Col xs="1">
+						<Tabs>
+							<TabList>
+								<Tab><b>Avalanche Conditions</b></Tab>
+								<Tab><b>Weather Conditions</b></Tab>
+							</TabList>
 
-				<Tabs>
-					<TabList>
-						<Tab><b>Avalanche Conditions</b></Tab>
-						<Tab><b>Weather Conditions</b></Tab>
-					</TabList>
+							<TabPanel>
+								
+				 		       	<Row style={{'margin-top' : '10px', 'margin-bottom' : '5px', 'border-top' : '1px'}}>
+				 		       		<Col xs="1/2">
+				 		       			<div style={{"width" : "100%"}}><h5 style={{"text-align" : 'center'}}>Elevation Danger</h5></div>
+				 		       		</Col>
+				 		       		<Col xs="1/2">
+				 		       			<div style={{"width" : "100%"}}><h5 style={{"text-align" : 'center'}}>Avalanche Problems Present	</h5></div>
+				 		       		</Col>
+				 		       	</Row>
+						 		<Row>
+							 		<Col xs="1/2">
+							 			{dangerTable}
+							 		</Col>
+						 			<Col xs="1/2">
+										{dangerTabs}
+									</Col>
 
-					<TabPanel>
-						
-		 		       	<Row style={{'margin-top' : '10px', 'margin-bottom' : '5px', 'border-top' : '1px'}}>
-		 		       		<Col xs="1/2">
-		 		       			<div style={{"width" : "100%"}}><h5 style={{"text-align" : 'center'}}>Elevation Danger</h5></div>
-		 		       		</Col>
-		 		       		<Col xs="1/2">
-		 		       			<div style={{"width" : "100%"}}><h5 style={{"text-align" : 'center'}}>Avalanche Problems Present	</h5></div>
-		 		       		</Col>
-		 		       	</Row>
-				 		<Row>
-					 		<Col xs="1/2">
-					 			{dangerTable}
-					 		</Col>
-				 			<Col xs="1/2">
-								{dangerTabs}
-							</Col>
-
-				 		</Row>
-					</TabPanel>
-					<TabPanel>
-						<WeatherPanel region={this.props.region}>
-						</WeatherPanel>
-					</TabPanel>
-				</Tabs>
+						 		</Row>
+							</TabPanel>
+							<TabPanel>
+								<WeatherPanel region={this.state.region_slug} weather={this.props.weather}>
+								</WeatherPanel>
+							</TabPanel>
+						</Tabs>
+					</Col>
+				</Row>
 			   </Container>)
 	}
 };

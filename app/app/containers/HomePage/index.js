@@ -26,7 +26,8 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 			'problems' : 'None',
 			'danger' : 'None', 
 			'detailedForecast': 'Loading...',
-			'detailedSummary' : 'Loading...'
+			'detailedSummary' : 'Loading...', 
+			'weather' : "none"
 		}; 
 		this.handler = this.handler.bind(this)
 		this.conditionClickHandler = this.conditionClickHandler.bind(this)
@@ -52,7 +53,8 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 				'problems'   : data.data.problems,
 				'danger'     : data.data.danger, 
 				'detailedForecast' : data.data.detailed_forecast,
-				'detailedSummary' : data.data.detailed_summary
+				'detailedSummary' : data.data.detailed_summary, 
+				'weather' : data.data.weather
 			})
 			console.log(this.state)
 		}
@@ -103,7 +105,8 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 		    				   problems={this.state.problems} 
 		    				   danger={this.state.danger}
 		    				   detailedForecast = {this.state.detailedForecast}
-		    				   detailedSummary = {this.state.detailedSummary}/>
+		    				   detailedSummary = {this.state.detailedSummary} 
+		    				   weather = {this.state.weather}/>
 		    	}
 		    </Col>
 		  </Row>
