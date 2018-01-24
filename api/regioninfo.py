@@ -51,7 +51,7 @@ def _get_detailed_summary(fcst):
     summary = ""
     it = 0
     text = ""
-    while text != "Observations":
+    while text != "Observations" and it < len(allp):
         summary += text + '\n'
         text = allp[it].text
         it += 1
