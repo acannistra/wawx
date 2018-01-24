@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import requests
+import re
 
 url_template = "https://www.nwac.us/avalanche-forecast/current/{region}"
 
@@ -64,20 +65,58 @@ def _get_detailed_forecast(fcst):
         'forecast' : "\n".join(map(lambda x: x.text, fd.find_all('p')))
     })
 
+def _getWeatherForecast(fcst):
+    base_url  = "https://www.nwac.us/mountain-weather-forecast/mountain-weather-forecast-by-zone/{id}/{region}"
+    url_regex = "\/mountain-weather-forecast\/mountain-weather-forecast-by-zone\/(\d{4})\/([\w-]*)\/"
+    raw = fcst.find_all('script')[19].text
+    matches = re.search(url_regex, raw)
+    url = base_url.format(id=matches.group(1), region=matches.group(2))
+    markup = requests.get(url, headers={"Referer" : "http://www.nwac.us"}).text
+    return({
+        'meta' : {
+            'current_id' : matches.group(1),
+            'region' : matches.group(2)
+        }, 
+        'url' : url, 
+        'html' : markup
+    })
+
+
 
 def getRegionalForecast(region):
     forecast = {}
     url = url_template.format(region=region)
     tree = BeautifulSoup(requests.get(url).text)
     # Forecast Time
-    forecast["updateTime"] = _getUpdatedTime(tree)
+    try: 
+        forecast["updateTime"] = _getUpdatedTime(tree)
+    except Exception:
+        forecast['updateTime'] = ""
     # Elevation Band Danger Levels
     danger = {}
-    for elev_band in ["treeline-above", 'treeline-near', 'treeline-below']:
-        danger[elev_band] = _getElevBandForecast(tree, elev_band)
+    bands = ["treeline-above", 'treeline-near', 'treeline-below']
+    for elev_band in bands:
+        try:
+            danger[elev_band] = _getElevBandForecast(tree, elev_band)
+        except Exception: 
+            danger[elev_band] = []
     forecast['danger'] = danger
     # Problems
-    forecast['problems'] = _getProblems(tree)
-    forecast['detailed_summary'] = _get_detailed_summary(tree)
-    forecast['detailed_forecast'] = _get_detailed_forecast(tree)
+    try: 
+        forecast['problems'] = _getProblems(tree)
+    except Exception:
+        forecast['problems'] = []
+    try: 
+        forecast['detailed_summary'] = _get_detailed_summary(tree)
+    except Exception:
+        forecast['detailed_summary'] = ""
+    try:
+        forecast['detailed_forecast'] = _get_detailed_forecast(tree)
+    except Exception:
+        forecast['detailed_forecast'] = ""
+
+    try:
+        forecast['weather'] = _getWeatherForecast(tree)
+    except Exception:
+        forecast['weather'] = {}
     return(forecast)
