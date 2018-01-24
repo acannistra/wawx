@@ -1,6 +1,6 @@
 # NWAC v2 [![Build Status](https://travis-ci.org/acannistra/wawx.svg?branch=master)](https://travis-ci.org/acannistra/wawx) 
----
-[live demo](nwac.s3-website-us-west-2.amazonaws.com)
+
+[live demo](http://nwac.s3-website-us-west-2.amazonaws.com)
 
 ![screenshot](docs/images/screenshot_1.png)
 
