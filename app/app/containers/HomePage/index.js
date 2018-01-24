@@ -11,6 +11,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Welcome from 'components/Welcome';
 import { Card, CardImg, CardText, CardBody,
   CardTitle, CardSubtitle, Button } from 'reactstrap';
+var screenshot = require("../../images/screenshot_1.png")
 import 'react-tabs/style/react-tabs.css';
 
 
@@ -93,7 +94,7 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 		const mobileSplash = 
 			(<div>
 		      <Card>
-		        <CardImg top width="100%" src="https://lh3.googleusercontent.com/gjbD9NskOFR_Ydq1VfUuhY4BcoBQwjuFkNyPG2bOo4Z9VQM0vIEkfwOkZbjU9WRm9bq_WB3gKA4BYoKo-TfL8d7bbufh5AjOrEtQVg1ATZow6W9Nassi6kYsrouZIf9XI11hlTn6ZQ=w1278-h958-no" alt="Card image cap" />
+		        <CardImg top width="100%" src={screenshot} alt="Card image cap" />
 		        <CardBody>
 		          <CardTitle>NWAC v2</CardTitle>
 		          <CardSubtitle>by <a href="http://www.anthonycannistra.com/about">Tony Cannistra</a></CardSubtitle>
