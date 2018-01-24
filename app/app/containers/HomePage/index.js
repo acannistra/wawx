@@ -9,6 +9,8 @@ import '!!style-loader!css-loader!../../root.css';
 var axios = require('axios');
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import Welcome from 'components/Welcome';
+import { Card, CardImg, CardText, CardBody,
+  CardTitle, CardSubtitle, Button } from 'reactstrap';
 import 'react-tabs/style/react-tabs.css';
 
 
@@ -27,7 +29,9 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 			'danger' : 'None', 
 			'detailedForecast': 'Loading...',
 			'detailedSummary' : 'Loading...', 
-			'weather' : "none"
+			'weather' : "none",
+			'isMobile': window.innerWidth <= 500
+
 		}; 
 		this.handler = this.handler.bind(this)
 		this.conditionClickHandler = this.conditionClickHandler.bind(this)
@@ -86,8 +90,21 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 			'bottom': '0px'
 		};
 
-		return (
-		  <Row style={{'height' : '100%'}}>
+		const mobileSplash = 
+			(<div>
+		      <Card>
+		        <CardImg top width="100%" src="https://lh3.googleusercontent.com/gjbD9NskOFR_Ydq1VfUuhY4BcoBQwjuFkNyPG2bOo4Z9VQM0vIEkfwOkZbjU9WRm9bq_WB3gKA4BYoKo-TfL8d7bbufh5AjOrEtQVg1ATZow6W9Nassi6kYsrouZIf9XI11hlTn6ZQ=w1278-h958-no" alt="Card image cap" />
+		        <CardBody>
+		          <CardTitle>NWAC v2</CardTitle>
+		          <CardSubtitle>by <a href="http://www.anthonycannistra.com/about">Tony Cannistra</a></CardSubtitle>
+		          <CardText>Apologies, but currently NWAC v2 cannot be viewed on a mobile device. Check it out on your computer!</CardText>
+		          <a href="//www.github.com/acannistra/wawx"><Button>View The Code</Button></a>
+		        </CardBody>
+		      </Card>
+		    </div>);
+
+		const mainBody = 
+		  (<Row style={{'height' : '100%'}}>
 			<Col xs="1/3">
 				<Row width="100%" style={{'height' : "100%"}}>
 					<Col width="100%" height="100%">
@@ -109,8 +126,14 @@ export default class HomePage extends React.Component { // eslint-disable-line r
 		    				   weather = {this.state.weather}/>
 		    	}
 		    </Col>
-		  </Row>
-		);
+		  </Row>);
+
+		if(this.state.isMobile){
+			return(mobileSplash)
+		} else {
+			return(mainBody)
+		};
+
 	}
 
 
